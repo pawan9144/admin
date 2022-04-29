@@ -1,6 +1,6 @@
 
 
-
+import React from 'react';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 // import Grid from '@mui/material/Grid';
@@ -10,9 +10,11 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Field, Form, Formik } from "formik";
 import { object, string } from "yup";
-import { useDispatch } from 'react-redux';
+import { useDispatch,useSelector } from 'react-redux';
 import {signup} from "../../redux/action/action"
 import {Link} from "react-router-dom"
+import { SpinnerCircular } from 'spinners-react';
+
 
 const initalValues = {
   email: "",
@@ -28,6 +30,15 @@ const theme = createTheme();
 
 export const Register = () => {
   const dispatch = useDispatch()
+ 
+  const data  = useSelector((state)=>state.auth.load)
+
+
+  console.log("******************",data)
+  
+
+  
+
   return (
     
     <ThemeProvider theme={theme}>
@@ -46,7 +57,9 @@ export const Register = () => {
             .min(7, "Password should be minimum 7 characters long"),
         })}
         onSubmit={(values, formikHelpers) => {
+      
           dispatch(signup(values))
+      
 
           formikHelpers.resetForm();
         }}
@@ -112,6 +125,7 @@ export const Register = () => {
               // disabled={!isValid || !dirty}
 
             >
+            {data ? <SpinnerCircular className='loginspinner' /> : null}
               Sign up
             </Button>
             <span>if user already register so,<Link to="/" >Login</Link> </span>

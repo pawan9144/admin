@@ -1,8 +1,21 @@
+import {Grid} from '@mui/material'
 import React from 'react'
+import OutlinedCard from "../../card/card"
 
 const Dashboard = () => {
+ 
   return (
-    <h1>Dashboard</h1>
+    <>
+
+
+    
+<Grid container spacing={2}>
+  <Grid item xs={3}>
+  <OutlinedCard/>
+  </Grid>
+
+</Grid>
+    </>
   )
 }
 

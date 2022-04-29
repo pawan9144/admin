@@ -1,27 +1,36 @@
 import ActionTypes from "../actiontype/actiontype"
 import axios from "axios"
 import { REACT_APP } from "../../services/env.config";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 
 export const signup = (values) =>async(dispatch)=>{
 
-
+  dispatch({
+    type: ActionTypes.REGISTER_REQUEST,
+   })
 
     const url = `${REACT_APP}/api/v1/user`
  
      await axios.post(url, values).then((res)=>{
-   console.log("?????????????????",res.data.data)
+
+
       localStorage.setItem("Token",JSON.stringify(res.data.data))
+ 
        dispatch({
         type: ActionTypes.REGISTER_SUCCESS,
         payload: res.data.data, 
        })
+      
      }).catch((err)=>{
-      dispatch({
-        type: ActionTypes.REGISTER_FAIL,
-        payload: err,
-       })
-      //  console.log(err)
-     })
+
+       dispatch({
+         type: ActionTypes.REGISTER_FAIL,
+         payload: err,
+        })
+        //  console.log(err)
+      })
 
 } 
 
@@ -30,23 +39,31 @@ export const signup = (values) =>async(dispatch)=>{
 
 
 export const signin = (values) =>async(dispatch)=>{
+  toast("skfhdsjfhdsfjsdfjkdshfjds")
+  dispatch({
+    type: ActionTypes.REGISTER_REQUEST,
+  })
   try{
-    const url = `${REACT_APP}/api/v1/user/loginuser`
+    const url = `${REACT_APP}/api/v1/user/login`
     const res = await axios.post(url, values);
-
-  
+    
+    toast.success("skfhdsjfhdsfjsdfjkdshfjds")
+    
     localStorage.setItem("userToken",res.data.token)
-
-   dispatch({
-    type: ActionTypes.LOGIN_SUCCESS,
-    payload: res.data.token,
-   })
-
-
-  }catch(error){
-   
+    
     dispatch({
-        type: ActionTypes.LOGIN_FAIL,
+      type: ActionTypes.LOGIN_SUCCESS,
+      payload: res.data.token,
+    })
+    
+    
+  }catch(error){
+    
+    
+    toast.error("ooiiiooioijkhljuh") 
+    
+    dispatch({
+      type: ActionTypes.LOGIN_FAIL,
         payload: error,
       });
 
